@@ -1,5 +1,6 @@
 package br.com.alura.adopet.api.model;
 
+import br.com.alura.adopet.api.dto.CadastroPetDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -13,45 +14,41 @@ public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
-    @Column(name = "tipo")
     private TipoPet tipo;
 
-    @NotBlank
-    @Column(name = "nome")
     private String nome;
 
-    @NotBlank
-    @Column(name = "raca")
     private String raca;
 
-    @NotNull
-    @Column(name = "idade")
     private Integer idade;
 
-    @NotBlank
-    @Column(name = "cor")
     private String cor;
 
-    @NotNull
-    @Column(name = "peso")
     private Float peso;
 
-    @Column(name = "adotado")
     private Boolean adotado;
 
-    @ManyToOne
-    @JsonBackReference("abrigo_pets")
-    @JoinColumn(name = "abrigo_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Abrigo abrigo;
 
     @OneToOne(mappedBy = "pet")
-    @JsonBackReference("adocao_pets")
     private Adocao adocao;
+
+    public Pet() {}
+
+    public Pet(CadastroPetDto dto, Abrigo abrigo) {
+        this.tipo = dto.tipo();
+        this.nome = dto.nome();
+        this.raca = dto.raca();
+        this.idade = dto.idade();
+        this.cor = dto.cor();
+        this.peso = dto.peso();
+        this.abrigo = abrigo;
+        this.adotado = false;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -78,10 +75,6 @@ public class Pet {
         return tipo;
     }
 
-    public void setTipo(TipoPet tipo) {
-        this.tipo = tipo;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -94,40 +87,20 @@ public class Pet {
         return raca;
     }
 
-    public void setRaca(String raca) {
-        this.raca = raca;
-    }
-
     public Integer getIdade() {
         return idade;
-    }
-
-    public void setIdade(Integer idade) {
-        this.idade = idade;
     }
 
     public String getCor() {
         return cor;
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
-
     public Float getPeso() {
         return peso;
     }
 
-    public void setPeso(Float peso) {
-        this.peso = peso;
-    }
-
     public Boolean getAdotado() {
         return adotado;
-    }
-
-    public void setAdotado(Boolean adotado) {
-        this.adotado = adotado;
     }
 
     public Abrigo getAbrigo() {
@@ -140,9 +113,5 @@ public class Pet {
 
     public Adocao getAdocao() {
         return adocao;
-    }
-
-    public void setAdocao(Adocao adocao) {
-        this.adocao = adocao;
     }
 }
