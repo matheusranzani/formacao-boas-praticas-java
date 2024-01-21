@@ -7,4 +7,4 @@ Estudos da [Formação Boas Práticas em Java](https://cursos.alura.com.br/forma
 - [Boas práticas de programação: automatizando testes com Java](https://cursos.alura.com.br/course/boas-praticas-programacao-testes-java)
 
 ## Certificado de conclusão
-- O certificado de conclusão da formação pode ser acessado [aqui]()
+- O certificado de conclusão da formação pode ser acessado [aqui](https://cursos.alura.com.br/degree/certificate/c99b4d70-1d21-4f14-9fcf-cbc0d4877f44?lang=pt_BR)

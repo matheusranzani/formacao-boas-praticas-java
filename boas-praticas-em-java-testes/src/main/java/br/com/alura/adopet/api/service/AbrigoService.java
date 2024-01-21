@@ -8,16 +8,19 @@ import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.repository.AbrigoRepository;
 import br.com.alura.adopet.api.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class AbrigoService {
-    @Autowired
-    AbrigoRepository abrigoRepository;
 
     @Autowired
-    PetRepository petRepository;
+    private AbrigoRepository abrigoRepository;
+
+    @Autowired
+    private PetRepository petRepository;
 
     public List<AbrigoDto> listar() {
         return abrigoRepository
@@ -27,14 +30,14 @@ public class AbrigoService {
                 .toList();
     }
 
-    public void cadastrar(CadastroAbrigoDto dto) {
+    public void cadatrar(CadastroAbrigoDto dto) {
         boolean jaCadastrado = abrigoRepository.existsByNomeOrTelefoneOrEmail(dto.nome(), dto.telefone(), dto.email());
 
         if (jaCadastrado) {
-            throw  new ValidacaoException("Dados já cadastrados para outro abrigo!");
+            throw new ValidacaoException("Dados já cadastrados para outro abrigo!");
         }
 
-        abrigoRepository.save(new Abrigo());
+        abrigoRepository.save(new Abrigo(dto));
     }
 
     public List<PetDto> listarPetsDoAbrigo(String idOuNome) {
@@ -49,7 +52,6 @@ public class AbrigoService {
 
     public Abrigo carregarAbrigo(String idOuNome) {
         Optional<Abrigo> optional;
-
         try {
             Long id = Long.parseLong(idOuNome);
             optional = abrigoRepository.findById(id);
@@ -59,4 +61,5 @@ public class AbrigoService {
 
         return optional.orElseThrow(() -> new ValidacaoException("Abrigo não encontrado"));
     }
+
 }
