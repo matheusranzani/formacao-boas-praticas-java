@@ -1,4 +1,4 @@
-# formacao-boas-praticas-em-java
+# formacao-boas-praticas-java
 Estudos da [Formação Boas Práticas em Java](https://cursos.alura.com.br/formacao-boas-praticas-java) da Alura
 
 ## Cursos
